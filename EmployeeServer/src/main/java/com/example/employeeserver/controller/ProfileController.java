@@ -41,16 +41,9 @@ public class ProfileController {
 
 
     }
-    @GetMapping("/test")
-    public Map test() {
-//        ProfileDomain profileDomain = profileService.getProfileById(id);
-
-        Map<String,Integer> h = new HashMap<>();
-        h.put("a",1);
-        h.put("b",2);
-        System.out.println(h.get("a"));
-        System.out.println(h.get("b"));
-        List<String> list = new ArrayList<>();
-        return h;
+    @GetMapping("/test/{id}")
+    public ResponseEntity<ProfileDomain> test(@PathVariable String id) {
+        ProfileDomain profileDomain = profileService.getProfileById(id);
+        return ResponseEntity.ok().body(profileDomain);
     }
 }
