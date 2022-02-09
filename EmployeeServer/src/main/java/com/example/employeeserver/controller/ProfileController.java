@@ -46,14 +46,14 @@ public class ProfileController {
 
         ProfileDomain profileDomain = null;
         try{
-         
+
             Gson g = new Gson();
             profileDomain = g.fromJson(model,ProfileDomain.class);
 
-            System.out.println(profileService.getProfileEntityById(id));
-            profileService.updateProfile(profileDomain,profileService.getProfileEntityById(id));
+            System.out.println(profileService.getProfileDomainById(id));
+            profileService.updateProfile(profileDomain,id);
 
-            return  ResponseEntity.ok().body(profileService.getProfileEntityById(id));
+            return  ResponseEntity.ok().body(profileService.getProfileDomainById(id));
         }catch (Exception e){
             e.printStackTrace();
             return ResponseEntity.internalServerError().build();
@@ -64,6 +64,6 @@ public class ProfileController {
         ProfileDomain profileDomain = profileService.getProfileDomainById(id);
         return ResponseEntity.ok().body(profileDomain);
     }
-
+   
 
 }

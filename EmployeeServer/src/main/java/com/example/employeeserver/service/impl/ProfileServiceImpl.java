@@ -15,38 +15,54 @@ public class ProfileServiceImpl implements ProfileService {
     ProfileRepository profileRepository;
     @Override
     public Profile getProfileEntityById(String id) {
-        List<Profile> profile = profileRepository.getProfileById(id);
-        return profile.get(0);
+        Profile profile = profileRepository.getProfileById(id);
+        return profile;
     }
     @Override
     public ProfileDomain getProfileDomainById(String id) {
-        List<Profile> profile = profileRepository.getProfileById(id);
+        Profile profile = profileRepository.getProfileById(id);
         return ProfileDomain.builder()
-                .cellphone(profile.get(0).getCellphone())
-                .AddressLine1(profile.get(0).getAddressLine1())
-                .AddressLine2(profile.get(0).getAddressLine2())
-                .city(profile.get(0).getCity())
-                .email(profile.get(0).getEmail())
-                .state(profile.get(0).getState())
-                .zipcode(profile.get(0).getZipcode())
-                .emergencyContactName1(profile.get(0).getEmergencyContactName1())
-                .emergencyContactCellphone1(profile.get(0).getEmergencyContactCellphone1())
-                .emergencyContactName2(profile.get(0).getEmergencyContactName2())
-                .emergencyContactCellphone2(profile.get(0).getEmergencyContactCellphone2())
+                .cellphone(profile.getCellphone())
+                .AddressLine1(profile.getAddressLine1())
+                .AddressLine2(profile.getAddressLine2())
+                .city(profile.getCity())
+                .email(profile.getEmail())
+                .state(profile.getState())
+                .zipcode(profile.getZipcode())
+                .emergencyContactName1(profile.getEmergencyContactName1())
+                .emergencyContactCellphone1(profile.getEmergencyContactCellphone1())
+                .emergencyContactName2(profile.getEmergencyContactName2())
+                .emergencyContactCellphone2(profile.getEmergencyContactCellphone2())
                 .build();
     }
-    public void updateProfile(ProfileDomain newProfileDomain, Profile profile) {
-        profile.setCellphone(newProfileDomain.getCellphone());
-        profile.setEmail(newProfileDomain.getEmail());
-        profile.setAddressLine1(newProfileDomain.getAddressLine1());
-        profile.setAddressLine2(newProfileDomain.getAddressLine2());
-        profile.setCity(newProfileDomain.getCity());
-        profile.setState(newProfileDomain.getState());
-        profile.setZipcode(newProfileDomain.getZipcode());
-        profile.setEmergencyContactCellphone1(newProfileDomain.getEmergencyContactCellphone1());
-        profile.setEmergencyContactName1(newProfileDomain.getEmergencyContactName1());
-        profile.setEmergencyContactName2(newProfileDomain.getEmergencyContactName2());
-        profile.setEmergencyContactCellphone2(newProfileDomain.getEmergencyContactCellphone2());
+    public void updateProfile(ProfileDomain newProfileDomain, String id) {
+//        Profile profile = profileRepository.getProfileById(id);
+//        profile.setCellphone(newProfileDomain.getCellphone());
+//        profile.setEmail(newProfileDomain.getEmail());
+//        profile.setAddressLine1(newProfileDomain.getAddressLine1());
+//        profile.setAddressLine2(newProfileDomain.getAddressLine2());
+//        profile.setCity(newProfileDomain.getCity());
+//        profile.setState(newProfileDomain.getState());
+//        profile.setZipcode(newProfileDomain.getZipcode());
+//        profile.setEmergencyContactCellphone1(newProfileDomain.getEmergencyContactCellphone1());
+//        profile.setEmergencyContactName1(newProfileDomain.getEmergencyContactName1());
+//        profile.setEmergencyContactName2(newProfileDomain.getEmergencyContactName2());
+//        profile.setEmergencyContactCellphone2(newProfileDomain.getEmergencyContactCellphone2());
+//        profileRepository.save(profile);
+
+        profileRepository.updateProfile(id,
+                newProfileDomain.getCellphone(),
+                newProfileDomain.getEmail(),
+                newProfileDomain.getAddressLine1(),
+                newProfileDomain.getAddressLine2(),
+                newProfileDomain.getCity(),
+                newProfileDomain.getState(),
+                newProfileDomain.getZipcode(),
+                newProfileDomain.getEmergencyContactName1(),
+                newProfileDomain.getEmergencyContactCellphone1(),
+                newProfileDomain.getEmergencyContactName2(),
+                newProfileDomain.getEmergencyContactCellphone2()
+                );
 
     }
 }
