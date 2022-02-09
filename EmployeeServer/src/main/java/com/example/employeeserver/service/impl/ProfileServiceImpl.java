@@ -14,7 +14,12 @@ public class ProfileServiceImpl implements ProfileService {
     @Autowired
     ProfileRepository profileRepository;
     @Override
-    public ProfileDomain getProfileById(String id) {
+    public Profile getProfileEntityById(String id) {
+        List<Profile> profile = profileRepository.getProfileById(id);
+        return profile.get(0);
+    }
+    @Override
+    public ProfileDomain getProfileDomainById(String id) {
         List<Profile> profile = profileRepository.getProfileById(id);
         return ProfileDomain.builder()
                 .cellphone(profile.get(0).getCellphone())
@@ -29,5 +34,19 @@ public class ProfileServiceImpl implements ProfileService {
                 .emergencyContactName2(profile.get(0).getEmergencyContactName2())
                 .emergencyContactCellphone2(profile.get(0).getEmergencyContactCellphone2())
                 .build();
+    }
+    public void updateProfile(ProfileDomain newProfileDomain, Profile profile) {
+        profile.setCellphone(newProfileDomain.getCellphone());
+        profile.setEmail(newProfileDomain.getEmail());
+        profile.setAddressLine1(newProfileDomain.getAddressLine1());
+        profile.setAddressLine2(newProfileDomain.getAddressLine2());
+        profile.setCity(newProfileDomain.getCity());
+        profile.setState(newProfileDomain.getState());
+        profile.setZipcode(newProfileDomain.getZipcode());
+        profile.setEmergencyContactCellphone1(newProfileDomain.getEmergencyContactCellphone1());
+        profile.setEmergencyContactName1(newProfileDomain.getEmergencyContactName1());
+        profile.setEmergencyContactName2(newProfileDomain.getEmergencyContactName2());
+        profile.setEmergencyContactCellphone2(newProfileDomain.getEmergencyContactCellphone2());
+
     }
 }

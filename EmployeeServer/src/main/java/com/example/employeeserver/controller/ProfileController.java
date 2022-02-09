@@ -7,16 +7,12 @@ import com.example.employeeserver.security.util.JwtUtil;
 import com.example.employeeserver.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import com.google.gson.Gson;
 
 @RestController
 public class ProfileController {
@@ -32,7 +28,7 @@ public class ProfileController {
 
         try {
 
-            ProfileDomain profileDomain = profileService.getProfileById(id);
+            ProfileDomain profileDomain = profileService.getProfileDomainById(id);
             return ResponseEntity.ok().body(profileDomain);
         } catch (Exception e) {
             System.out.println("error catch");
@@ -41,9 +37,33 @@ public class ProfileController {
 
 
     }
+
+    @PutMapping("/profile")
+    public ResponseEntity<Object> updateProfile(ServletRequest servletRequest,@RequestPart(value = "model") String model) {
+        HttpServletRequest req = (HttpServletRequest) servletRequest;
+        String token = CookieUtil.getValue(req, JwtConstant.JWT_COOKIE_NAME);
+        String id = JwtUtil.getSubjectFromJwt(token);
+
+        ProfileDomain profileDomain = null;
+        try{
+         
+            Gson g = new Gson();
+            profileDomain = g.fromJson(model,ProfileDomain.class);
+
+            System.out.println(profileService.getProfileEntityById(id));
+            profileService.updateProfile(profileDomain,profileService.getProfileEntityById(id));
+
+            return  ResponseEntity.ok().body(profileService.getProfileEntityById(id));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
     @GetMapping("/test/{id}")
     public ResponseEntity<ProfileDomain> test(@PathVariable String id) {
-        ProfileDomain profileDomain = profileService.getProfileById(id);
+        ProfileDomain profileDomain = profileService.getProfileDomainById(id);
         return ResponseEntity.ok().body(profileDomain);
     }
+
+
 }
