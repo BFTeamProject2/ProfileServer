@@ -8,10 +8,15 @@ import com.example.employeeserver.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ProfileController {
@@ -35,5 +40,17 @@ public class ProfileController {
         }
 
 
+    }
+    @GetMapping("/test")
+    public Map test() {
+//        ProfileDomain profileDomain = profileService.getProfileById(id);
+
+        Map<String,Integer> h = new HashMap<>();
+        h.put("a",1);
+        h.put("b",2);
+        System.out.println(h.get("a"));
+        System.out.println(h.get("b"));
+        List<String> list = new ArrayList<>();
+        return h;
     }
 }

@@ -6,7 +6,7 @@ import lombok.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
+@ToString
 @Entity
 @Builder
 @NoArgsConstructor
@@ -21,9 +21,9 @@ public class Profile {
     private String cellphone;
     @Column(name = "email")
     private String email;
-    @Column(name = "addressLine1")
+    @Column(name = "addressline1")
     private String AddressLine1;
-    @Column(name = "addressLine2")
+    @Column(name = "addressline2")
     private String AddressLine2;
     @Column(name = "city")
     private String city;

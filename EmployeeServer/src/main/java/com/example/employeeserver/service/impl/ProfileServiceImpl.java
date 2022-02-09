@@ -7,25 +7,27 @@ import com.example.employeeserver.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProfileServiceImpl implements ProfileService {
     @Autowired
     ProfileRepository profileRepository;
     @Override
     public ProfileDomain getProfileById(String id) {
-        Profile profile = profileRepository.getProfileById(id);
+        List<Profile> profile = profileRepository.getProfileById(id);
         return ProfileDomain.builder()
-                .cellphone(profile.getCellphone())
-                .AddressLine1(profile.getAddressLine1())
-                .AddressLine2(profile.getAddressLine2())
-                .city(profile.getCity())
-                .email(profile.getEmail())
-                .state(profile.getState())
-                .zipcode(profile.getZipcode())
-                .emergencyContactName1(profile.getEmergencyContactName1())
-                .emergencyContactCellphone1(profile.getEmergencyContactCellphone1())
-                .emergencyContactName2(profile.getEmergencyContactName2())
-                .emergencyContactCellphone2(profile.getEmergencyContactCellphone2())
+                .cellphone(profile.get(0).getCellphone())
+//                .AddressLine1(profile.get(0).getAddressLine1())
+//                .AddressLine2(profile.get(0).getAddressLine2())
+//                .city(profile.get(0).getCity())
+//                .email(profile.get(0).getEmail())
+//                .state(profile.get(0).getState())
+//                .zipcode(profile.get(0).getZipcode())
+//                .emergencyContactName1(profile.get(0).getEmergencyContactName1())
+//                .emergencyContactCellphone1(profile.get(0).getEmergencyContactCellphone1())
+//                .emergencyContactName2(profile.get(0).getEmergencyContactName2())
+//                .emergencyContactCellphone2(profile.get(0).getEmergencyContactCellphone2())
                 .build();
     }
 }

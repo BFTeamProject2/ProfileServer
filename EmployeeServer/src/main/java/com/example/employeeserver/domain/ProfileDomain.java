@@ -1,9 +1,8 @@
 package com.example.employeeserver.domain;
 
+//import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import javax.persistence.Column;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @ToString
 @Builder
@@ -14,27 +13,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProfileDomain {
 
-    @JsonProperty
+//    @JsonProperty
     private String cellphone;
 
-    @JsonProperty
-    private String email;
-    @JsonProperty
-    private String AddressLine1;
-    @JsonProperty
-    private String AddressLine2;
-    @JsonProperty
-    private String city;
-    @JsonProperty
-    private String state;
-    @JsonProperty
-    private String zipcode;
-    @JsonProperty
-    private String emergencyContactName1;
-    @JsonProperty
-    private String emergencyContactCellphone1;
-    @JsonProperty
-    private String emergencyContactName2;
-    @JsonProperty
-    private String emergencyContactCellphone2;
+//    @JsonProperty
+//    private String email;
+//    @JsonProperty
+//    private String AddressLine1;
+//    @JsonProperty
+//    private String AddressLine2;
+//    @JsonProperty
+//    private String city;
+//    @JsonProperty
+//    private String state;
+//    @JsonProperty
+//    private String zipcode;
+//    @JsonProperty
+//    private String emergencyContactName1;
+//    @JsonProperty
+//    private String emergencyContactCellphone1;
+//    @JsonProperty
+//    private String emergencyContactName2;
+//    @JsonProperty
+//    private String emergencyContactCellphone2;
 }
