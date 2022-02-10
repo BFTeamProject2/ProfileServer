@@ -19,51 +19,98 @@ public class ProfileController {
     @Autowired
     ProfileService profileService;
 
-    @GetMapping("/profile")
-    public ResponseEntity<ProfileDomain> getProfile(ServletRequest servletRequest) {
+//    @GetMapping("/profile")
+//    public ResponseEntity<ProfileDomain> getProfile(ServletRequest servletRequest) {
+//
+//        HttpServletRequest req = (HttpServletRequest) servletRequest;
+//        String token = CookieUtil.getValue(req, JwtConstant.JWT_COOKIE_NAME);
+//        String id = JwtUtil.getSubjectFromJwt(token);
+//
+//        try {
+//
+//            ProfileDomain profileDomain = profileService.getProfileDomainById(id);
+//            return ResponseEntity.ok().body(profileDomain);
+//        } catch (Exception e) {
+//            System.out.println("error catch");
+//            return ResponseEntity.internalServerError().build();
+//        }
+//
+//
+//    }
+@GetMapping("/profile")
+public ResponseEntity<ProfileDomain> getProfile(@RequestHeader("Authorization") String token) {
 
-        HttpServletRequest req = (HttpServletRequest) servletRequest;
-        String token = CookieUtil.getValue(req, JwtConstant.JWT_COOKIE_NAME);
-        String id = JwtUtil.getSubjectFromJwt(token);
 
-        try {
+    String id = JwtUtil.getSubjectFromJwt(token);
 
-            ProfileDomain profileDomain = profileService.getProfileDomainById(id);
-            return ResponseEntity.ok().body(profileDomain);
-        } catch (Exception e) {
-            System.out.println("error catch");
-            return ResponseEntity.internalServerError().build();
-        }
+    try {
 
-
+        ProfileDomain profileDomain = profileService.getProfileDomainById(id);
+        return ResponseEntity.ok().body(profileDomain);
+    } catch (Exception e) {
+        System.out.println("error catch");
+        return ResponseEntity.internalServerError().build();
     }
 
-    @PutMapping("/profile")
-    public ResponseEntity<Object> updateProfile(ServletRequest servletRequest,@RequestPart(value = "model") String model) {
-        HttpServletRequest req = (HttpServletRequest) servletRequest;
-        String token = CookieUtil.getValue(req, JwtConstant.JWT_COOKIE_NAME);
-        String id = JwtUtil.getSubjectFromJwt(token);
 
-        ProfileDomain profileDomain = null;
-        try{
+}
 
-            Gson g = new Gson();
-            profileDomain = g.fromJson(model,ProfileDomain.class);
+//    @PutMapping("/profile")
+//    public ResponseEntity<Object> updateProfile(ServletRequest servletRequest,@RequestPart(value = "model") String model) {
+//        HttpServletRequest req = (HttpServletRequest) servletRequest;
+//        String token = CookieUtil.getValue(req, JwtConstant.JWT_COOKIE_NAME);
+//        String id = JwtUtil.getSubjectFromJwt(token);
+//
+//        ProfileDomain profileDomain = null;
+//        try{
+//
+//            Gson g = new Gson();
+//            profileDomain = g.fromJson(model,ProfileDomain.class);
+//
+//            System.out.println(profileService.getProfileDomainById(id));
+//            profileService.updateProfile(profileDomain,id);
+//
+//            return  ResponseEntity.ok().body(profileService.getProfileDomainById(id));
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            return ResponseEntity.internalServerError().build();
+//        }
+//    }
+@PutMapping("/profile")
+public ResponseEntity<Object> updateProfile(@RequestHeader("Authorization") String token,@RequestPart(value = "model") String model) {
 
-            System.out.println(profileService.getProfileDomainById(id));
-            profileService.updateProfile(profileDomain,id);
+    String id = JwtUtil.getSubjectFromJwt(token);
 
-            return  ResponseEntity.ok().body(profileService.getProfileDomainById(id));
-        }catch (Exception e){
-            e.printStackTrace();
-            return ResponseEntity.internalServerError().build();
-        }
+    ProfileDomain profileDomain = null;
+    try{
+
+        Gson g = new Gson();
+        profileDomain = g.fromJson(model,ProfileDomain.class);
+
+        System.out.println(profileService.getProfileDomainById(id));
+        profileService.updateProfile(profileDomain,id);
+
+        return  ResponseEntity.ok().body(profileService.getProfileDomainById(id));
+    }catch (Exception e){
+        e.printStackTrace();
+        return ResponseEntity.internalServerError().build();
     }
+}
     @GetMapping("/test/{id}")
     public ResponseEntity<ProfileDomain> test(@PathVariable String id) {
         ProfileDomain profileDomain = profileService.getProfileDomainById(id);
         return ResponseEntity.ok().body(profileDomain);
     }
-   
+
+    @PutMapping("/test2")
+    public ResponseEntity<Object> test2(@RequestBody ProfileDomain profileDomain) {
+        String id = "1";
+        System.out.println(profileDomain);
+        profileService.updateProfile(profileDomain, id);
+        System.out.println(profileService.getProfileEntityById(id));
+        System.out.println(profileService.getProfileDomainById(id));
+        return ResponseEntity.ok().body(profileService.getProfileDomainById(id));
+    }
+
 
 }
